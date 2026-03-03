@@ -1,0 +1,39 @@
+name: Build Android
+
+on:
+  push:
+    branches: 
+      - '**'
+    paths:
+      - 'Android/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+
+      - name: Make gradlew executable
+        working-directory: Android
+        run: chmod +x ./gradlew
+
+      - name: Create keystore.properties
+        working-directory: Android
+        run: |
+          cat <<EOF > keystore.properties
+          intelity_jfrog_user=${{ secrets.INTELITY_JFROG_USER }}
+          intelity_jfrog_password=${{ secrets.INTELITY_JFROG_PASSWORD }}
+          EOF
+
+      - name: Build Compose app
+        working-directory: Android
+        run: ./gradlew assembleDebug
