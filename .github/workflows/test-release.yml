@@ -30,8 +30,8 @@ jobs:
         working-directory: Android
         run: |
           cat <<EOF > keystore.properties
-          intelity_jfrog_user=${{ secrets.INTELITY_JFROG_USER }}
-          intelity_jfrog_password=${{ secrets.INTELITY_JFROG_PASSWORD }}
+          intelity_jfrog_user=${{ secrets.USER }}
+          intelity_jfrog_password=${{ secrets.PASSWORD }}
           EOF
 
       - name: Build Compose app
