@@ -23,11 +23,9 @@ jobs:
           cache: gradle
 
       - name: Make gradlew executable
-        working-directory: Android
         run: chmod +x ./gradlew
 
       - name: Create keystore.properties
-        working-directory: Android
         run: |
           cat <<EOF > keystore.properties
           intelity_jfrog_user=${{ secrets.USER }}
@@ -35,5 +33,4 @@ jobs:
           EOF
 
       - name: Build Compose app
-        working-directory: Android
         run: ./gradlew assembleDebug
